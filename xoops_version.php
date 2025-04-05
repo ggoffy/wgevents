@@ -166,54 +166,12 @@ $permissionsHandler = $helper->getHandler('Permission');
 // ------------------- Menu ------------------- //
 $currdirname  = isset($GLOBALS['xoopsModule']) && \is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system';
 if ($currdirname == $moduleDirName) {
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME1,
-        'url'  => 'index.php',
-    ];
-    // Sub events
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME2,
-        'url'  => 'event.php',
-    ];
-    if ($permissionsHandler->getPermEventsSubmit()) {
-        // Sub Submit
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME10,
-            'url' => 'event.php?op=list&amp;filter=me',
-        ];
+    $submenu = new \XoopsModules\Wgevents\Modulemenu;
+    $menuItems = $submenu->getMenuitemsDefault();
+    foreach ($menuItems as $key => $menuItem) {
+        $modversion['sub'][$key]['name'] = $menuItem['name'];
+        $modversion['sub'][$key]['url'] = $menuItem['url'];
     }
-    if ($permissionsHandler->getPermEventsSubmit()) {
-        // Sub Submit
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME3,
-            'url' => 'event.php?op=new',
-        ];
-    }
-    if ($permissionsHandler->getPermEventsSubmit()) {
-        // Sub Submit
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME8,
-            'url' => 'textblock.php?op=list',
-        ];
-    }
-    if ($permissionsHandler->getPermRegistrationsSubmit()) {
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME5,
-            'url'  => 'registration.php?op=listmy',
-        ];
-    }
-    if ($helper->getConfig('cal_page')) {
-        // calendar
-        $modversion['sub'][] = [
-            'name' => \_MI_WGEVENTS_SMNAME6,
-            'url' => 'calendar.php',
-        ];
-    }
-    // export
-    $modversion['sub'][] = [
-        'name' => \_MI_WGEVENTS_SMNAME11,
-        'url' => 'export.php?op=list&amp;new=1',
-    ];
 }
 // ------------------- Default Blocks ------------------- //
 // Event last
