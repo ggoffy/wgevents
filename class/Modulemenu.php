@@ -105,8 +105,6 @@ class Modulemenu
      */
     public function getMenuitemsSbadmin5()
     {
-        return $this->getMenuitemsDefault();
-        
         $moduleDirName = \basename(\dirname(__DIR__));
         $pathname      = \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/';
         $urlModule     = \XOOPS_URL . '/modules/' . $moduleDirName . '/';
