@@ -41,62 +41,59 @@ class Modulemenu
         $helper->loadLanguage('modinfo');
 
         $items = [];
-        $currdirname  = isset($GLOBALS['xoopsModule']) && \is_object($GLOBALS['xoopsModule']) ? $GLOBALS['xoopsModule']->getVar('dirname') : 'system';
-        if ($currdirname == $moduleDirName) {
-            require_once \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
-            $helper = Helper::getInstance();
-            $permissionsHandler = $helper->getHandler('Permission');
+        require_once \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
+        $helper = Helper::getInstance();
+        $permissionsHandler = $helper->getHandler('Permission');
 
-            $items = [];
+        $items = [];
+        $items[] = [
+            'name' => \_MI_WGEVENTS_SMNAME1,
+            'url'  => 'index.php',
+        ];
+        // Sub events
+        $items[] = [
+            'name' => \_MI_WGEVENTS_SMNAME2,
+            'url'  => 'event.php',
+        ];
+        if ($permissionsHandler->getPermEventsSubmit()) {
+            // Sub Submit
             $items[] = [
-                'name' => \_MI_WGEVENTS_SMNAME1,
-                'url'  => 'index.php',
-            ];
-            // Sub events
-            $items[] = [
-                'name' => \_MI_WGEVENTS_SMNAME2,
-                'url'  => 'event.php',
-            ];
-            if ($permissionsHandler->getPermEventsSubmit()) {
-                // Sub Submit
-                $items[] = [
-                    'name' => \_MI_WGEVENTS_SMNAME10,
-                    'url' => 'event.php?op=list&amp;filter=me',
-                ];
-            }
-            if ($permissionsHandler->getPermEventsSubmit()) {
-                // Sub Submit
-                $items[] = [
-                    'name' => \_MI_WGEVENTS_SMNAME3,
-                    'url' => 'event.php?op=new',
-                ];
-            }
-            if ($permissionsHandler->getPermEventsSubmit()) {
-                // Sub Submit
-                $items[] = [
-                    'name' => \_MI_WGEVENTS_SMNAME8,
-                    'url' => 'textblock.php?op=list',
-                ];
-            }
-            if ($permissionsHandler->getPermRegistrationsSubmit()) {
-                $items[] = [
-                    'name' => \_MI_WGEVENTS_SMNAME5,
-                    'url'  => 'registration.php?op=listmy',
-                ];
-            }
-            if ($helper->getConfig('cal_page')) {
-                // calendar
-                $items[] = [
-                    'name' => \_MI_WGEVENTS_SMNAME6,
-                    'url' => 'calendar.php',
-                ];
-            }
-            // export
-            $items[] = [
-                'name' => \_MI_WGEVENTS_SMNAME11,
-                'url' => 'export.php?op=list&amp;new=1',
+                'name' => \_MI_WGEVENTS_SMNAME10,
+                'url' => 'event.php?op=list&amp;filter=me',
             ];
         }
+        if ($permissionsHandler->getPermEventsSubmit()) {
+            // Sub Submit
+            $items[] = [
+                'name' => \_MI_WGEVENTS_SMNAME3,
+                'url' => 'event.php?op=new',
+            ];
+        }
+        if ($permissionsHandler->getPermEventsSubmit()) {
+            // Sub Submit
+            $items[] = [
+                'name' => \_MI_WGEVENTS_SMNAME8,
+                'url' => 'textblock.php?op=list',
+            ];
+        }
+        if ($permissionsHandler->getPermRegistrationsSubmit()) {
+            $items[] = [
+                'name' => \_MI_WGEVENTS_SMNAME5,
+                'url'  => 'registration.php?op=listmy',
+            ];
+        }
+        if ($helper->getConfig('cal_page')) {
+            // calendar
+            $items[] = [
+                'name' => \_MI_WGEVENTS_SMNAME6,
+                'url' => 'calendar.php',
+            ];
+        }
+        // export
+        $items[] = [
+            'name' => \_MI_WGEVENTS_SMNAME11,
+            'url' => 'export.php?op=list&amp;new=1',
+        ];
 
         return $items;
     }
@@ -108,6 +105,8 @@ class Modulemenu
      */
     public function getMenuitemsSbadmin5()
     {
+        return $this->getMenuitemsDefault();
+        
         $moduleDirName = \basename(\dirname(__DIR__));
         $pathname      = \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/';
         $urlModule     = \XOOPS_URL . '/modules/' . $moduleDirName . '/';
