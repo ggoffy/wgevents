@@ -34,13 +34,13 @@ class Modulemenu
 
         $moduleDirName = \basename(\dirname(__DIR__));
         $pathname      = \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/';
+        $urlModule     = \XOOPS_URL . '/modules/' . $moduleDirName . '/';
 
         require_once $pathname . 'include/common.php';
         $helper = \XoopsModules\Wgevents\Helper::getInstance();
         //load necessary language files from this module
         $helper->loadLanguage('modinfo');
 
-        $items = [];
         require_once \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/include/common.php';
         $helper = Helper::getInstance();
         $permissionsHandler = $helper->getHandler('Permission');
@@ -48,51 +48,51 @@ class Modulemenu
         $items = [];
         $items[] = [
             'name' => \_MI_WGEVENTS_SMNAME1,
-            'url'  => 'index.php',
+            'url'  => $urlModule . 'index.php',
         ];
         // Sub events
         $items[] = [
             'name' => \_MI_WGEVENTS_SMNAME2,
-            'url'  => 'event.php',
+            'url'  => $urlModule . 'event.php',
         ];
         if ($permissionsHandler->getPermEventsSubmit()) {
             // Sub Submit
             $items[] = [
                 'name' => \_MI_WGEVENTS_SMNAME10,
-                'url' => 'event.php?op=list&amp;filter=me',
+                'url' => $urlModule . 'event.php?op=list&amp;filter=me',
             ];
         }
         if ($permissionsHandler->getPermEventsSubmit()) {
             // Sub Submit
             $items[] = [
                 'name' => \_MI_WGEVENTS_SMNAME3,
-                'url' => 'event.php?op=new',
+                'url' => $urlModule . 'event.php?op=new',
             ];
         }
         if ($permissionsHandler->getPermEventsSubmit()) {
             // Sub Submit
             $items[] = [
                 'name' => \_MI_WGEVENTS_SMNAME8,
-                'url' => 'textblock.php?op=list',
+                'url' => $urlModule . 'textblock.php?op=list',
             ];
         }
         if ($permissionsHandler->getPermRegistrationsSubmit()) {
             $items[] = [
                 'name' => \_MI_WGEVENTS_SMNAME5,
-                'url'  => 'registration.php?op=listmy',
+                'url'  => $urlModule . 'registration.php?op=listmy',
             ];
         }
         if ($helper->getConfig('cal_page')) {
             // calendar
             $items[] = [
                 'name' => \_MI_WGEVENTS_SMNAME6,
-                'url' => 'calendar.php',
+                'url' => $urlModule . 'calendar.php',
             ];
         }
         // export
         $items[] = [
             'name' => \_MI_WGEVENTS_SMNAME11,
-            'url' => 'export.php?op=list&amp;new=1',
+            'url' => $urlModule . 'export.php?op=list&amp;new=1',
         ];
 
         return $items;
@@ -132,7 +132,7 @@ class Modulemenu
         ];
         // Sub events
         $nav_items1[] = [
-            'highlight' => \strpos($requestUri, $moduleDirName . '/event.php') > 0,
+            'highlight' => \strpos($requestUri, $moduleDirName . '/event.php') > 0 && 0 === (int)\strpos($requestUri, $moduleDirName . '/event.php?op='),
             'url' => $urlModule . 'event.php',
             'icon' => '<i class="fa fa-file fa-fw fa-lg"></i>',
             'name' => \_MI_WGEVENTS_SMNAME2,
@@ -141,7 +141,7 @@ class Modulemenu
         if ($permissionsHandler->getPermEventsSubmit()) {
             // Sub Submit
             $nav_items1[] = [
-                'highlight' => \strpos($requestUri, $moduleDirName . '/event.php?op=list&amp;filter=me') > 0,
+                'highlight' => \strpos($requestUri, $moduleDirName . '/event.php?op=list') > 0,
                 'url' => $urlModule . 'event.php?op=list&amp;filter=me',
                 'icon' => '<i class="fa fa-user fa-fw fa-lg"></i>',
                 'name' => \_MI_WGEVENTS_SMNAME10,
@@ -161,7 +161,7 @@ class Modulemenu
         if ($permissionsHandler->getPermEventsSubmit()) {
             // Sub Submit
             $nav_items1[] = [
-                'highlight' => \strpos($requestUri, $moduleDirName . 'textblock.php') > 0,
+                'highlight' => \strpos($requestUri, $moduleDirName . '/textblock.php') > 0,
                 'url' => $urlModule . 'textblock.php?op=list',
                 'icon' => '<i class="fa fa-file-lines fa-fw fa-lg"></i>',
                 'name' => \_MI_WGEVENTS_SMNAME8,
@@ -170,7 +170,7 @@ class Modulemenu
         }
         if ($permissionsHandler->getPermRegistrationsSubmit()) {
             $nav_items1[] = [
-                'highlight' => \strpos($requestUri, $moduleDirName . 'registration.php') > 0,
+                'highlight' => \strpos($requestUri, $moduleDirName . '/registration.php') > 0,
                 'url' => $urlModule . 'registration.php?op=listmy',
                 'icon' => '<i class="fa fa-user fa-fw fa-lg"></i>',
                 'name' => \_MI_WGEVENTS_SMNAME5,
@@ -180,7 +180,7 @@ class Modulemenu
         if ($helper->getConfig('cal_page')) {
             // calendar
             $nav_items1[] = [
-                'highlight' => \strpos($requestUri, $moduleDirName . 'calendar.php') > 0,
+                'highlight' => \strpos($requestUri, $moduleDirName . '/calendar.php') > 0,
                 'url' => $urlModule . 'calendar.php',
                 'icon' => '<i class="fa fa-calendar fa-fw fa-lg"></i>',
                 'name' => \_MI_WGEVENTS_SMNAME6,
@@ -189,7 +189,7 @@ class Modulemenu
         }
         // export
         $nav_items1[] = [
-            'highlight' => \strpos($requestUri, $moduleDirName . 'export.php') > 0,
+            'highlight' => \strpos($requestUri, $moduleDirName . '/export.php') > 0,
             'url' => $urlModule . 'export.php?op=list&amp;new=1',
             'icon' => '<i class="fa fa-download fa-fw fa-lg"></i>',
             'name' => \_MI_WGEVENTS_SMNAME11,
