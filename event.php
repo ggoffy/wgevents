@@ -464,19 +464,20 @@ switch ($op) {
             if (0 === $evId) {
                 $categoryObj = $categoryHandler->get($catId);
                 $identifier = (string)$categoryObj->getVar('identifier');
-                if ('' !== $identifier){
+                if ('' === $identifier) {
+                    $identifier .= $eventDatefromObj->format('Y') . '_';
+                } else {
                     if (\substr($identifier, -1) !== '_') {
                         $identifier .= '_';
                     }
-                    $identifier .= $eventDatefromObj->format('Y') . '_';
-                    $crEvent = new \CriteriaCompo();
-                    $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
-                    $eventsCount = $eventHandler->getCount($crEvent) + 1;
-                    $eventIdentifierObj = $eventHandler->get($newEvId);
-                    $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
-                    $eventHandler->insert($eventIdentifierObj);
-                    unset($eventIdentifierObj);
                 }
+                $crEvent = new \CriteriaCompo();
+                $crEvent->add(new \Criteria('identifier', $identifier . '%', 'LIKE'));
+                $eventsCount = $eventHandler->getCount($crEvent) + 1;
+                $eventIdentifierObj = $eventHandler->get($newEvId);
+                $eventIdentifierObj->setVar('identifier', $identifier . ($eventsCount));
+                $eventHandler->insert($eventIdentifierObj);
+                unset($eventIdentifierObj);
             } else {
                 $eventIdentifierObj = $eventHandler->get($evId);
                 $eventIdentifierObj->setVar('identifier', Request::getString('identifier'));
