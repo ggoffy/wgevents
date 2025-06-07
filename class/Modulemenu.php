@@ -34,7 +34,7 @@ class Modulemenu
 
         $moduleDirName = \basename(\dirname(__DIR__));
         $pathname      = \XOOPS_ROOT_PATH . '/modules/' . $moduleDirName . '/';
-        $urlModule     = \XOOPS_URL . '/modules/' . $moduleDirName . '/';
+        $urlModule     = '';
 
         require_once $pathname . 'include/common.php';
         $helper = \XoopsModules\Wgevents\Helper::getInstance();

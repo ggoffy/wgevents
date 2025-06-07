@@ -717,7 +717,7 @@ switch ($op) {
         $eventObjClone  = $eventHandler->create();
         $vars = $eventObjSource->getVars();
         foreach (\array_keys($vars) as $var) {
-            $eventObjClone->setVar($var, $eventObjSource->getVar($var));
+            $eventObjClone->setVar($var, $eventObjSource->getVar($var, 'e'));
         }
         $eventObjClone->idSource = $evIdSource;
         $form = $eventObjClone->getForm();
