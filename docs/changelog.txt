@@ -4,6 +4,7 @@
 - last stable version for PHP 7 (goffy)
 - fixed limit for lists in admin area (goffy)
 - more detailed log for testing email accounts (goffy)
+- changed sort order for task and logs in admin (goffy)
 
 ==============================================================
 1.0.7 RC1 [2023/06/27]

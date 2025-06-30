@@ -96,7 +96,7 @@ class LogHandler extends \XoopsPersistableObjectHandler
      * @param string $order
      * @return array
      */
-    public function getAllLogs($start = 0, $limit = 0, $sort = 'id ASC, text', $order = 'ASC')
+    public function getAllLogs($start = 0, $limit = 0, $sort = 'id DESC, text', $order = 'ASC')
     {
         $crAllLogs = new \CriteriaCompo();
         $crAllLogs = $this->getLogsCriteria($crAllLogs, $start, $limit, $sort, $order);
