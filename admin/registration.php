@@ -196,7 +196,6 @@ switch ($op) {
                     $answerHandler->insert($answerObj);
                 }
             }
-            //&evid=330
             \redirect_header('registration.php?op=list&amp;evid=' . $regEvid, 2, \_MA_WGEVENTS_FORM_OK);
         }
         // Get Form
@@ -226,10 +225,14 @@ switch ($op) {
             if (!$GLOBALS['xoopsSecurity']->check()) {
                 \redirect_header('registration.php', 3, \implode(', ', $GLOBALS['xoopsSecurity']->getErrors()));
             }
+            // create history
+            $registrationhistHandler->createHistory($registrationObj, 'delete');
             if ($registrationHandler->delete($registrationObj)) {
+                // create history
+                $answerhistHandler->createHistory($regEvid, $regId, 'delete');
                 //delete existing answers
                 $answerHandler->cleanupAnswers($regEvid, $regId);
-                \redirect_header('registration.php', 3, \_MA_WGEVENTS_FORM_DELETE_OK);
+                \redirect_header('registration.php?op=list&evid=' . $regEvid, 3, \_MA_WGEVENTS_FORM_DELETE_OK);
             } else {
                 $GLOBALS['xoopsTpl']->assign('error', $registrationObj->getHtmlErrors());
             }
